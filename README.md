@@ -1,6 +1,7 @@
 # 权限管理</br>
 ## 查询test1可以查看的页面:共19条记录  
 查询语句：  
+<pre>
 select d.MenuNo,d.MenuName  
 from sys_menu d  
 where d.MenuID in  
@@ -27,6 +28,9 @@ and c.PrivilegeMasterKey=
 					(select distinct a.UserID  
 				from cf_user a  
 				where a.LoginName='test1')))  
+</pre>
+
+
 ![查询test1可以查看的页面](images/1.PNG)  
 <p></p>
 ## 伪代码：
@@ -42,7 +46,8 @@ and c.PrivilegeMasterKey=
 <p></p>
 
 ## 查询test1可以对order页面进行的操作:共4条记录  
-查询语句：  
+查询语句：
+<pre>
 select e.BtnID,e.BtnName,e.BtnNo,e.BtnIcon,e.MenuNo  
 from sys_button e  
 where e.MenuNo=  
@@ -78,6 +83,8 @@ and c.PrivilegeMasterKey=
 				(select distinct a.UserID  
 				from cf_user a  
 				where a.LoginName='test1')))  
+</pre>
+
 
 ![查询test1可以对order页面进行的操作](images/2.PNG)
 <p></p>
