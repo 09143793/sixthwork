@@ -1,5 +1,32 @@
 # 权限管理</br>
 ## 查询test1可以查看的页面:共19条记录  
+查询语句：  
+select d.MenuNo,d.MenuName  
+from sys_menu d  
+where d.MenuID in  
+	(select c.PrivilegeAccessKey  
+from cf_privilege c  
+where c.PrivilegeAccess='Sys_Menu'   
+and c.PrivilegeMaster='CF_User'  
+and c.PrivilegeMasterKey=  
+			(select distinct a.UserID  
+		from cf_user a  
+		where a.LoginName='test1'))  
+union   
+select d.MenuNo,d.MenuName  
+from sys_menu d  
+where d.MenuID in  
+	(select c.PrivilegeAccessKey  
+from cf_privilege c  
+where c.PrivilegeAccess='Sys_Menu'   
+and c.PrivilegeMaster='CF_Role'  
+and c.PrivilegeMasterKey=  
+			(select distinct b.RoleID  
+		from cf_userrole b  
+		where b.UserID=  
+					(select distinct a.UserID  
+				from cf_user a  
+				where a.LoginName='test1')))  
 ![查询test1可以查看的页面](images/1.PNG)  
 <p></p>
 ## 伪代码：
@@ -14,7 +41,44 @@
 <p></p>
 <p></p>
 
-## 查询test1可以对order页面进行的操作:共4条记录
+## 查询test1可以对order页面进行的操作:共4条记录  
+查询语句：  
+select e.BtnID,e.BtnName,e.BtnNo,e.BtnIcon,e.MenuNo  
+from sys_button e  
+where e.MenuNo=  
+(select d.MenuNo  
+from sys_menu d  
+where d.MenuName='订单' )  
+and e.BtnID in  
+(select c.PrivilegeAccessKey  
+from cf_privilege c  
+where c.PrivilegeAccess='Sys_button'  
+and c.PrivilegeOperation='Permit'  
+and c.PrivilegeMaster='CF_User'  
+and c.PrivilegeMasterKey=  
+			(select a.UserID  
+			from cf_user a   
+			where a.LoginName='test1'))  
+UNION  
+select e.BtnID,e.BtnName,e.BtnNo,e.BtnIcon,e.MenuNo  
+from sys_button e  
+where e.MenuNo=  
+(select d.MenuNo  
+from sys_menu d  
+where d.MenuName='订单' )  
+and e.BtnID in  
+(select c.PrivilegeAccessKey  
+from cf_privilege c  
+where c.PrivilegeAccess='Sys_button'  
+and c.PrivilegeMaster='CF_Role'  
+and c.PrivilegeMasterKey=  
+			(select b.RoleID  
+			from cf_userrole b   
+			where b.UserID=  
+				(select distinct a.UserID  
+				from cf_user a  
+				where a.LoginName='test1')))  
+
 ![查询test1可以对order页面进行的操作](images/2.PNG)
 <p></p>
 
