@@ -2,7 +2,7 @@
 ## 查询test1可以查看的页面:共19条记录</br>
 ![查询test1可以查看的页面](images/1.PNG)</br>
 <p></p>
-##伪代码：</br>
+## 伪代码：</br>
 1.	根据用户的登录名test1在用户表里查对应的userid</br>
 2.	根据userid去权限表里查对应的访问人类型为user、访问对象类型为Menu的对应的Menuid</br>
 3.	根据Menuid去菜单（页面）表里查对应的菜单（页面）名称Menuname</br>
